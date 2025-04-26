@@ -1,8 +1,9 @@
 
-import Calculator from '../components/Calculator';
+import React from 'react';
+import PrintShopApp from '../components/PrintShopApp';
 
 const Index = () => {
-  return <Calculator />;
+  return <PrintShopApp />;
 };
 
 export default Index;

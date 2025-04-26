@@ -6,12 +6,10 @@ import {
   Minus,
   Asterisk,
   Divide,
-  Equal
 } from "lucide-react";
 
 const Calculator = () => {
   const [display, setDisplay] = useState('');
-  const [total, setTotal] = useState(0);
 
   const handleDigit = (digit: string) => {
     setDisplay(prev => prev + digit);
@@ -23,77 +21,59 @@ const Calculator = () => {
 
   const calculate = () => {
     try {
-      const result = eval(display);
+      // Use Function constructor instead of eval for slightly safer evaluation
+      const result = Function('"use strict";return (' + display + ')')();
       setDisplay(result.toString());
-      setTotal(result);
     } catch (error) {
-      setDisplay('Error');
+      setDisplay('خطأ');
     }
   };
 
   const clear = () => {
     setDisplay('');
-    setTotal(0);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
-      <div className="w-full max-w-md space-y-6">
-        {/* Display */}
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <div className="text-right text-2xl font-mono mb-2">
-            {display || '0'}
-          </div>
+    <div className="bg-zinc-900 rounded-lg p-4 shadow-lg">
+      <div className="text-center mb-2 text-white text-xl">شاشة الآلة الحاسبة</div>
+      
+      {/* Display */}
+      <div className="bg-black p-4 rounded-lg mb-4">
+        <div className="text-right text-2xl font-mono text-white h-10">
+          {display || '0'}
         </div>
+      </div>
 
-        {/* Keypad */}
-        <div className="grid grid-cols-4 gap-2">
-          <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white" onClick={clear}>C</Button>
-          <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white" onClick={() => handleOperator('(')}>(</Button>
-          <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white" onClick={() => handleOperator(')')}>)</Button>
-          <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white" onClick={() => handleOperator('/')}><Divide className="h-4 w-4" /></Button>
+      {/* Keypad */}
+      <div className="grid grid-cols-4 gap-2">
+        {/* First row */}
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('7')}>7</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('8')}>8</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('9')}>9</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleOperator('+')}><Plus className="h-6 w-6" /></Button>
 
-          {[7, 8, 9].map((num) => (
-            <Button
-              key={num}
-              variant="outline"
-              className="bg-teal-600 hover:bg-teal-700 text-white"
-              onClick={() => handleDigit(num.toString())}
-            >
-              {num}
-            </Button>
-          ))}
-          <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white" onClick={() => handleOperator('*')}><Asterisk className="h-4 w-4" /></Button>
+        {/* Second row */}
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('4')}>4</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('5')}>5</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('6')}>6</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleOperator('-')}><Minus className="h-6 w-6" /></Button>
 
-          {[4, 5, 6].map((num) => (
-            <Button
-              key={num}
-              variant="outline"
-              className="bg-teal-600 hover:bg-teal-700 text-white"
-              onClick={() => handleDigit(num.toString())}
-            >
-              {num}
-            </Button>
-          ))}
-          <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white" onClick={() => handleOperator('-')}><Minus className="h-4 w-4" /></Button>
+        {/* Third row */}
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('1')}>1</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('2')}>2</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('3')}>3</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleOperator('*')}><Asterisk className="h-6 w-6" /></Button>
 
-          {[1, 2, 3].map((num) => (
-            <Button
-              key={num}
-              variant="outline"
-              className="bg-teal-600 hover:bg-teal-700 text-white"
-              onClick={() => handleDigit(num.toString())}
-            >
-              {num}
-            </Button>
-          ))}
-          <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white" onClick={() => handleOperator('+')}><Plus className="h-4 w-4" /></Button>
-
-          <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white" onClick={() => handleDigit('0')}>0</Button>
-          <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white" onClick={() => handleDigit('.')}>.</Button>
-          <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white" onClick={clear}>AC</Button>
-          <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white" onClick={calculate}><Equal className="h-4 w-4" /></Button>
-        </div>
+        {/* Fourth row */}
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('0')}>0</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('.')}>.</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => calculate()}>=</Button>
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleOperator('/')}><Divide className="h-6 w-6" /></Button>
+      </div>
+      
+      {/* Clear button */}
+      <div className="mt-2">
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white w-full h-14" onClick={clear}>C</Button>
       </div>
     </div>
   );
