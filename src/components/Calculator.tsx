@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Plus, Minus, Asterisk, Divide } from "lucide-react";
+
 const Calculator = () => {
   const [display, setDisplay] = useState('');
   const handleDigit = (digit: string) => {
@@ -11,7 +12,6 @@ const Calculator = () => {
   };
   const calculate = () => {
     try {
-      // Use Function constructor instead of eval for slightly safer evaluation
       const result = Function('"use strict";return (' + display + ')')();
       setDisplay(result.toString());
     } catch (error) {
@@ -58,8 +58,8 @@ const Calculator = () => {
         <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleOperator('/')}><Divide className="h-6 w-6" /></Button>
       </div>
       
-      {/* Clear button */}
-      <div className="mt-2">
+      {/* Clear button above the grid */}
+      <div className="mt-2 mb-2">
         <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white w-full h-14" onClick={clear}>C</Button>
       </div>
     </div>;
