@@ -24,6 +24,11 @@ const Calculator = () => {
   return <div className="bg-zinc-900 rounded-lg p-4 shadow-lg">
       <div className="text-center mb-2 text-white text-xl">شاشة الآلة الحاسبة</div>
       
+      {/* Clear button above the grid */}
+      <div className="mb-2">
+        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white w-full h-14" onClick={clear}>C</Button>
+      </div>
+
       {/* Display */}
       <div className="bg-black p-4 rounded-lg mb-4">
         <div className="text-right text-2xl font-mono text-white h-10">
@@ -56,11 +61,6 @@ const Calculator = () => {
         <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('.')}>.</Button>
         <Button variant="outline" onClick={() => calculate()} className="bg-teal-600 hover:bg-teal-700 text-white h-14 rounded-xl mx-[-20px] my-[74px] py-[13px] px-[170px] text-5xl font-semibold text-center">=</Button>
         <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleOperator('/')}><Divide className="h-6 w-6" /></Button>
-      </div>
-      
-      {/* Clear button above the grid */}
-      <div className="mt-2 mb-2">
-        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white w-full h-14" onClick={clear}>C</Button>
       </div>
     </div>;
 };
