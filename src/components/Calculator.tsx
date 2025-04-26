@@ -1,24 +1,14 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { 
-  Plus,
-  Minus,
-  Asterisk,
-  Divide,
-} from "lucide-react";
-
+import { Plus, Minus, Asterisk, Divide } from "lucide-react";
 const Calculator = () => {
   const [display, setDisplay] = useState('');
-
   const handleDigit = (digit: string) => {
     setDisplay(prev => prev + digit);
   };
-
   const handleOperator = (operator: string) => {
     setDisplay(prev => prev + operator);
   };
-
   const calculate = () => {
     try {
       // Use Function constructor instead of eval for slightly safer evaluation
@@ -28,13 +18,10 @@ const Calculator = () => {
       setDisplay('خطأ');
     }
   };
-
   const clear = () => {
     setDisplay('');
   };
-
-  return (
-    <div className="bg-zinc-900 rounded-lg p-4 shadow-lg">
+  return <div className="bg-zinc-900 rounded-lg p-4 shadow-lg">
       <div className="text-center mb-2 text-white text-xl">شاشة الآلة الحاسبة</div>
       
       {/* Display */}
@@ -67,7 +54,7 @@ const Calculator = () => {
         {/* Fourth row */}
         <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('0')}>0</Button>
         <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleDigit('.')}>.</Button>
-        <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => calculate()}>=</Button>
+        <Button variant="outline" onClick={() => calculate()} className="bg-teal-600 hover:bg-teal-700 text-white h-14 rounded-xl mx-[-20px] my-[74px] py-[13px] px-[170px] text-5xl font-semibold text-center">=</Button>
         <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white h-14" onClick={() => handleOperator('/')}><Divide className="h-6 w-6" /></Button>
       </div>
       
@@ -75,8 +62,6 @@ const Calculator = () => {
       <div className="mt-2">
         <Button variant="outline" className="bg-teal-600 hover:bg-teal-700 text-white w-full h-14" onClick={clear}>C</Button>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Calculator;
